@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  ultrachat:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SESSION_SECRET=${SESSION_SECRET:-default_session_secret}
+      - JWT_SECRET=${JWT_SECRET:-default_jwt_secret}
+    volumes:
+      - ./user_files:/app/user_files
+      - ./sandbox:/app/sandbox
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - ultrachat-network
+
+  # Optional: PostgreSQL for production use
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=ultrachat
+      - POSTGRES_USER=ultrachat
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-ultrachat_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - ultrachat-network
+    ports:
+      - "5432:5432"
+
+  # Optional: Redis for session management and caching
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    networks:
+      - ultrachat-network
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - ultrachat
+    restart: unless-stopped
+    networks:
+      - ultrachat-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  ultrachat-network:
+    driver: bridge
