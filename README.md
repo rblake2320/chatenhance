@@ -8,6 +8,7 @@ UltraChat is a production-grade, multi-agent AI orchestrator that provides advan
 ## 🚀 Key Features
 
 ### Core Capabilities
+
 - **Multi-Agent Orchestration**: Intelligent routing between planner, worker, and reviewer agents
 - **OpenAI Integration**: Support for GPT-4, GPT-4o, and other OpenAI models with automatic model selection
 - **Tool Calling System**: Extensible tools for code execution, web browsing, file operations, and API calls
@@ -16,6 +17,7 @@ UltraChat is a production-grade, multi-agent AI orchestrator that provides advan
 - **Real-time WebSocket**: Live updates and agent status monitoring
 
 ### Advanced Features
+
 - **Slash Commands**: `/help`, `/tools`, `/mode`, `/depth`, `/upload`, `/explain` and more
 - **Multiple Interaction Modes**: Auto, Plan, Do, Review modes for different use cases
 - **Depth Control**: 5 levels of analysis granularity (1-5)
@@ -24,6 +26,7 @@ UltraChat is a production-grade, multi-agent AI orchestrator that provides advan
 - **Comprehensive Logging**: Structured logging with audit trails and PII redaction
 
 ### Enterprise Ready
+
 - **Docker Support**: Complete containerization with docker-compose
 - **Health Monitoring**: System metrics, performance tracking, and alerting
 - **Admin Dashboard**: Web-based administration panel
@@ -43,5 +46,16 @@ UltraChat is a production-grade, multi-agent AI orchestrator that provides advan
 ### Automated Setup
 
 **Windows (PowerShell):**
+
 ```powershell
 .\bootstrap.ps1 -OpenAIKey "your-api-key-here"
+```
+
+### Development
+
+Run linting and tests:
+
+```bash
+npm run lint
+npm test
+```
