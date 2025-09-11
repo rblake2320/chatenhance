@@ -16,7 +16,7 @@ function makeRequest(method, path, data = null) {
       method,
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     };
 
     const req = http.request(options, (res) => {
@@ -90,7 +90,7 @@ async function testEvaluationSystem() {
     modes: ['auto'],
     depths: [2],
     categories: ['coding'],
-    parallel: false
+    parallel: false,
   };
 
   try {

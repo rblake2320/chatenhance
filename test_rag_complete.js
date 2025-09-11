@@ -16,7 +16,7 @@ function makeRequest(method, path, data = null) {
       method,
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     };
 
     const req = http.request(options, (res) => {
@@ -70,8 +70,8 @@ async function testRAGPipeline() {
     metadata: {
       type: 'educational',
       category: 'ai-ml',
-      uploadedBy: 'test-user'
-    }
+      uploadedBy: 'test-user',
+    },
   };
 
   try {
@@ -116,7 +116,7 @@ async function testRAGPipeline() {
     'What is machine learning?',
     'Tell me about deep learning',
     'What are the applications of AI?',
-    'How does natural language processing work?'
+    'How does natural language processing work?',
   ];
 
   for (const query of searchQueries) {
@@ -124,7 +124,7 @@ async function testRAGPipeline() {
       console.log(`\n🔎 Query: "${query}"`);
       const searchResult = await makeRequest('POST', '/api/search', { 
         query,
-        maxResults: 3
+        maxResults: 3,
       });
       
       console.log(`✅ Search Status: ${searchResult.status}`);
@@ -149,7 +149,7 @@ async function testRAGPipeline() {
   console.log('\n🤖 Test 4: RAG Answer Generation');
   const answerQueries = [
     'What is the difference between machine learning and deep learning?',
-    'What are the main applications of artificial intelligence?'
+    'What are the main applications of artificial intelligence?',
   ];
 
   for (const query of answerQueries) {
@@ -157,7 +157,7 @@ async function testRAGPipeline() {
       console.log(`\n❓ Question: "${query}"`);
       const answerResult = await makeRequest('POST', '/api/ask-documents', { 
         query,
-        model: 'gpt-5'
+        model: 'gpt-5',
       });
       
       console.log(`✅ Answer Status: ${answerResult.status}`);
@@ -171,7 +171,7 @@ async function testRAGPipeline() {
         }
         
         if (answerResult.data.sources.length > 0) {
-          console.log(`\n📖 Sources:`);
+          console.log('\n📖 Sources:');
           answerResult.data.sources.forEach((source, idx) => {
             console.log(`   ${idx + 1}. ${source.filename}`);
             console.log(`      📄 Excerpt: ${source.chunk}`);
@@ -193,7 +193,7 @@ async function testRAGPipeline() {
     if (healthResult.status === 200) {
       console.log(`🔄 Uptime: ${Math.floor(healthResult.data.uptime)} seconds`);
       console.log(`💾 Memory Usage: ${Math.floor(healthResult.data.memory.heapUsed / 1024 / 1024)} MB`);
-      console.log(`📊 System Metrics: Available`);
+      console.log('📊 System Metrics: Available');
     }
   } catch (error) {
     console.log(`❌ Health check error: ${error.message}`);
